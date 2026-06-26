@@ -108,18 +108,32 @@ If the predicted risk exceeds a threshold,
 ## Repository Structure
 
 ```
-├── data/
-├── models/
-├── notebooks/
-├── src/
-│   ├── preprocessing.py
-│   ├── train.py
-│   ├── predict.py
-│   └── feedback.py
-├── results/
-├── README.md
-└── requirements.txt
+.
+├── README.md                              # Project documentation
+├── astronaut_disorientation_dataset.csv   # Simulated astronaut sensor and task dataset used for model training
+├── cognitive_twin_engine.py               # Core Cognitive Twin prediction engine and inference pipeline
+├── SheNav_AI_code.ipynb                   # Jupyter notebook for model training, evaluation, and experimentation
+├── SheNav_VR.ipynb                        # VR simulation workflow and data generation notebook
+├── server.js                              # Backend server for real-time prediction API
+└── index.html                             # Frontend interface for demonstrating the Cognitive Twin system
 ```
+
+### File Descriptions
+
+* **README.md** – Overview of the project, methodology, architecture, and usage instructions.
+
+* **astronaut_disorientation_dataset.csv** – Synthetic dataset containing simulated astronaut sensor readings, task context, and labels used to train the Cognitive Twin model.
+
+* **cognitive_twin_engine.py** – Implements the prediction pipeline, processes sequential inputs, loads the trained model, and generates decision-risk predictions.
+
+* **SheNav_AI_code.ipynb** – Contains data preprocessing, feature engineering, model training, evaluation metrics, and experimental analysis.
+
+* **SheNav_VR.ipynb** – Demonstrates the virtual reality simulation used to generate astronaut task scenarios and collect synthetic behavioral data.
+
+* **server.js** – Node.js backend that serves prediction requests and connects the frontend with the AI inference engine.
+
+* **index.html** – Web-based interface for interacting with the Cognitive Twin prototype and visualizing prediction results.
+
 
 ---
 
