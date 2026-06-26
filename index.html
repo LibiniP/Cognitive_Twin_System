@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>VR Simulator Stream Engine</title>
+    <style>
+        body { background: #05060f; color: white; font-family: monospace; text-align: center; transition: background 0.1s ease; }
+        /* High-intensity flashing strobe styling for danger alerts */
+        .danger-alarm-active {
+            animation: scamStrobe 0.2s infinite alternate;
+        }
+        @keyframes scamStrobe {
+            0% { background-color: #05060f; }
+            100% { background-color: #ff0000; }
+        }
+        #terminal { width: 80%; height: 300px; margin: 20px auto; background: #0d1117; padding: 15px; border: 1px solid #2a2d3e; text-align: left; overflow-y: scroll; }
+    </style>
+</head>
+<body>
+    <h1>🛸 VR Telemetry Stream Engine</h1>
+    <div id="alarm-box" style="padding: 20px; font-size: 24px; font-weight: bold;">STATUS: TRACKING NOMINAL</div>
+    <div id="terminal"></div>
+
+    <script>
+        const ws = new WebSocket('ws://localhost:3000');
+        const logBox = document.getElementById('terminal');
+        const alarmBox = document.getElementById('alarm-box');
+
+        ws.onopen = () => {
+            // Register this node as the VR stream simulator
+            ws.send(JSON.stringify({ type: 'IDENTIFY_VR' }));
+            log("Connected to router loop. Spawning infinite telemetry data...");
+            startInfiniteGeneration();
+        };
+
+        ws.onmessage = (event) => {
+            const msg = JSON.parse(event.data);
+            if (msg.type === 'ALARM_TRIGGER') {
+                if (msg.visualDanger) {
+                    // Activate aggressive on/off high-risk bright visual alarm
+                    document.body.classList.add('danger-alarm-active');
+                    alarmBox.innerText = `⚠️ DANGER DETECTED (RISK: ${(msg.riskScore*100).toFixed(1)}%) \n HAPTIC: ${msg.hapticPattern}`;
+                    alarmBox.style.color = '#ff3333';
+                }
+            } else {
+                // Clear the alert if no danger payload is actively pushed
+                document.body.classList.remove('danger-alarm-active');
+                alarmBox.innerText = "STATUS: TRACKING NOMINAL";
+                alarmBox.style.color = '#10b981';
+            }
+        };
+
+        function startInfiniteGeneration() {
+            let windowIndex = 0;
+            // Send data out continuously at the physical frame rate interval
+            setInterval(() => {
+                const telemetry = {
+                    type: 'VR_TELEMETRY',
+                    timestamp: new Date().toISOString(),
+                    window_index: windowIndex++,
+                    // Infinite procedural signal simulation mimicking raw sensor registers
+                    imu_roll_rate: (Math.sin(windowIndex * 0.1) * 0.5) + (Math.random() * 0.1),
+                    imu_pitch_rate: (Math.cos(windowIndex * 0.15) * 0.4) + (Math.random() * 0.1),
+                    imu_yaw_rate: (Math.sin(windowIndex * 0.05) * 0.2),
+                    imu_lin_accel: 0.05 + (Math.random() * 0.1),
+                    hand_x: 0.12 + (Math.sin(windowIndex * 0.08) * 0.5),
+                    hand_y: 1.42 + (Math.random() * 0.02),
+                    hand_z: -0.95 + (Math.cos(windowIndex * 0.08) * 0.5),
+                    target_x: 0.0, target_y: 1.55, target_z: -1.5,
+                    heart_rate_bpm: 72 + (Math.sin(windowIndex * 0.01) * 15) + (Math.random() * 2),
+                    blink_rate_per_min: 15 - (Math.random() * 3),
+                    fatigue_score: Math.min(1.0, windowIndex * 0.0001)
+                };
+                ws.send(JSON.stringify(telemetry));
+                log(`Streamed Data Segment #${windowIndex} to Core...`);
+            }, 62); // ~16Hz refresh cadence matching your raw data timeline
+        }
+
+        function log(txt) {
+            logBox.innerHTML += `<div>[${new Date().toLocaleTimeString()}] ${txt}</div>`;
+            logBox.scrollTop = logBox.scrollHeight;
+        }
+    </script>
+</body>
+</html>
