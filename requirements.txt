@@ -1,0 +1,14 @@
+gradio
+streamlit
+torch
+scikit-learn
+pandas
+numpy
+matplotlib
+seaborn
+tqdm
+pyngrok
+websocket-client
+jupyter
+notebook
+ipykernel
