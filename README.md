@@ -2,28 +2,29 @@
 
 A proof-of-concept AI system that predicts potential astronaut decision errors in simulated microgravity environments and provides proactive haptic feedback before incorrect actions occur.
 
-> Developed as a research prototype to explore personalized cognitive digital twins for space mission safety.
+> Developed as a research prototype to explore personalized Cognitive Digital Twins for improving astronaut decision support and space mission safety.
 
 ---
 
 ## Overview
 
-Spatial disorientation is one of the biggest human-factor risks during space missions. In microgravity, astronauts can confidently make incorrect decisions because vestibular and visual cues become unreliable.
+Spatial disorientation is one of the most significant human-factor risks during space missions. In microgravity, astronauts can confidently perform incorrect actions because vestibular and visual cues become unreliable.
 
-This project proposes a **Cognitive Twin**—a personalized AI model that learns an individual's decision-making patterns and predicts high-risk actions before they occur.
+This project proposes a **Cognitive Twin**—a personalized AI model that continuously learns an astronaut's decision-making patterns and predicts high-risk actions before they occur.
 
-The system demonstrates how sequential sensor data can be analyzed using deep learning to enable proactive intervention through wearable haptic feedback.
+The system demonstrates how sequential behavioral data can be analyzed using deep learning to enable proactive intervention through wearable haptic feedback, helping astronauts verify their actions before errors occur.
 
 ---
 
 ## Features
 
-- Personalized cognitive twin for each astronaut
-- Sequential behavior modeling using LSTM networks
-- Prediction of high-risk decision errors
-- Real-time inference pipeline (proof of concept)
-- Wearable haptic feedback trigger simulation
-- Adaptive architecture for continuous personalization
+* Personalized Cognitive Twin for each astronaut
+* Sequential behavior modeling using LSTM neural networks
+* Prediction of high-risk decision errors
+* Real-time inference pipeline (proof of concept)
+* Wearable haptic feedback trigger simulation
+* Adaptive architecture for continuous personalization
+* WebSocket-based communication between AI and VR simulator
 
 ---
 
@@ -46,7 +47,7 @@ Decision Threshold
  ┌───────────────┐
  │ High Risk?    │
  └──────┬────────┘
-        │Yes
+        │ Yes
         ▼
 Haptic Feedback Trigger
 ```
@@ -55,14 +56,17 @@ Haptic Feedback Trigger
 
 ## Tech Stack
 
-- Python
-- TensorFlow / Keras
-- NumPy
-- Pandas
-- Scikit-learn
-- LSTM Networks
-- Edge AI (Concept)
-- Wearable Haptic Feedback (Prototype)
+* Python
+* PyTorch
+* NumPy
+* Pandas
+* Scikit-learn
+* Streamlit
+* Node.js
+* Express.js
+* WebSockets
+* LSTM Neural Networks
+* Wearable Haptic Feedback (Prototype)
 
 ---
 
@@ -70,21 +74,22 @@ Haptic Feedback Trigger
 
 ### 1. Data Collection
 
-Simulated astronaut task sequences are collected, including:
+Simulated astronaut task sequences are generated, including:
 
-- Sequential sensor readings
-- Motion data
-- Task context
-- Reaction time
-- Intended vs actual movement
+* Sequential sensor readings
+* Motion data
+* Head orientation
+* Task context
+* Reaction time
+* Intended versus actual movement
 
 ---
 
 ### 2. Model Training
 
-An LSTM network learns temporal patterns that precede incorrect actions.
+An LSTM-based Cognitive Twin learns temporal behavioral patterns that precede incorrect astronaut actions.
 
-The model outputs a probability of an upcoming decision error.
+The trained model outputs the probability that an upcoming decision will be incorrect.
 
 ---
 
@@ -92,16 +97,17 @@ The model outputs a probability of an upcoming decision error.
 
 Incoming sensor streams are processed continuously.
 
-The trained model predicts whether the astronaut is likely to perform an incorrect action.
+The Cognitive Twin predicts whether the astronaut is likely to perform an incorrect action before execution.
 
 ---
 
 ### 4. Intervention
 
-If the predicted risk exceeds a threshold,
+If the predicted risk exceeds a predefined threshold:
 
-- A wearable device triggers haptic feedback
-- The astronaut is prompted to verify the intended action before execution
+* A wearable device triggers haptic feedback.
+* The astronaut receives a warning before executing the action.
+* The system encourages action verification without interrupting mission workflow.
 
 ---
 
@@ -109,52 +115,129 @@ If the predicted risk exceeds a threshold,
 
 ```
 .
-├── README.md                              # Project documentation
-├── astronaut_disorientation_dataset.csv   # Simulated astronaut sensor and task dataset used for model training
-├── cognitive_twin_engine.py               # Core Cognitive Twin prediction engine and inference pipeline
-├── SheNav_AI_code.ipynb                   # Jupyter notebook for model training, evaluation, and experimentation
-├── SheNav_VR.ipynb                        # VR simulation workflow and data generation notebook
-├── server.js                              # Backend server for real-time prediction API
-└── index.html                             # Frontend interface for demonstrating the Cognitive Twin system
+├── README.md
+├── astronaut_disorientation_dataset.csv
+├── cognitive_twin_engine.py
+├── SheNav_AI_code.ipynb
+├── SheNav_VR.ipynb
+├── server.js
+├── index.html
+├── requirements.txt
+└── package.json
 ```
 
-### File Descriptions
+---
 
-* **README.md** – Overview of the project, methodology, architecture, and usage instructions.
+## File Descriptions
 
-* **astronaut_disorientation_dataset.csv** – Synthetic dataset containing simulated astronaut sensor readings, task context, and labels used to train the Cognitive Twin model.
+* **README.md** – Project overview, methodology, architecture, and usage instructions.
+* **astronaut_disorientation_dataset.csv** – Synthetic astronaut behavioral dataset used for training and evaluation.
+* **cognitive_twin_engine.py** – Core Cognitive Twin inference engine.
+* **SheNav_AI_code.ipynb** – Data preprocessing, feature engineering, model training, and experimentation.
+* **SheNav_VR.ipynb** – VR simulation workflow used for synthetic data generation.
+* **server.js** – WebSocket server connecting the VR simulator and Cognitive Twin AI engine.
+* **index.html** – Browser-based interface for interacting with the prototype.
+* **requirements.txt** – Python dependencies.
+* **package.json** – Node.js dependencies.
 
-* **cognitive_twin_engine.py** – Implements the prediction pipeline, processes sequential inputs, loads the trained model, and generates decision-risk predictions.
+---
 
-* **SheNav_AI_code.ipynb** – Contains data preprocessing, feature engineering, model training, evaluation metrics, and experimental analysis.
+## Demonstration Workflow
 
-* **SheNav_VR.ipynb** – Demonstrates the virtual reality simulation used to generate astronaut task scenarios and collect synthetic behavioral data.
+The prototype consists of three interconnected components:
 
-* **server.js** – Node.js backend that serves prediction requests and connects the frontend with the AI inference engine.
+1. **VR Simulator**
+2. **Cognitive Twin AI Engine**
+3. **Real-Time WebSocket Communication Server**
 
-* **index.html** – Web-based interface for interacting with the Cognitive Twin prototype and visualizing prediction results.
+Workflow:
 
+```
+VR Simulator
+      │
+      ▼
+Sensor Streams
+      │
+      ▼
+Cognitive Twin
+      │
+Risk Prediction
+      │
+      ▼
+Haptic Alert
+      │
+      ▼
+Astronaut Action Correction
+```
+
+The Cognitive Twin continuously analyzes incoming behavioral sequences and predicts high-risk decisions before execution, triggering simulated haptic warnings when necessary.
+
+---
+
+## Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/LibiniP/Cognitive_Twin_System.git
+cd Cognitive_Twin_System
+```
+
+Install Python dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Install Node.js dependencies:
+
+```bash
+npm install
+```
+
+---
+
+## Running the Project
+
+Start the WebSocket server:
+
+```bash
+node server.js
+```
+
+Run the AI engine:
+
+```bash
+python cognitive_twin_engine.py
+```
+
+Or open the Jupyter notebook:
+
+```bash
+jupyter notebook SheNav_AI_code.ipynb
+```
 
 ---
 
 ## Future Improvements
 
-- Integration with VR-based astronaut simulators
-- Transformer-based sequence models
-- Federated learning across astronaut crews
-- Personalized online learning
-- Real wearable device integration
-- Deployment on edge hardware
+* Integration with VR-based astronaut simulators
+* Transformer-based sequence models
+* Federated learning across astronaut crews
+* Personalized online learning
+* Real wearable haptic device integration
+* Edge AI deployment for onboard spacecraft systems
 
 ---
 
 ## Applications
 
-- Space mission safety
-- Human-AI collaboration
-- Cognitive digital twins
-- Human reliability prediction
-- Aerospace decision support systems
+* Space mission safety
+* Human-AI collaboration
+* Cognitive Digital Twins
+* Human reliability prediction
+* Aerospace decision support
+* Adaptive astronaut assistance systems
 
 ---
 
@@ -162,7 +245,13 @@ If the predicted risk exceeds a threshold,
 
 **Proof of Concept (POC)**
 
-This project demonstrates the feasibility of using personalized AI models to predict astronaut decision errors before execution. It is intended for research and educational purposes.
+This project demonstrates the feasibility of using personalized AI models to predict astronaut decision errors before execution. It is intended for research, educational, and prototype demonstration purposes.
+
+---
+
+## Disclaimer
+
+This project uses simulated astronaut behavioral data and demonstrates the concept of Cognitive Digital Twins. It is not intended for operational deployment in real space missions.
 
 ---
 
@@ -178,4 +267,4 @@ Amrita Vishwa Vidyapeetham
 
 ## License
 
-This project is intended for academic and research purposes.
+This project is intended for academic, educational, and research purposes.
