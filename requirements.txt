@@ -1,12 +1,12 @@
-gradio
-streamlit
-torch
-scikit-learn
-pandas
 numpy
+pandas
+scikit-learn
+torch
 matplotlib
 seaborn
 tqdm
+streamlit
+gradio
 pyngrok
 websocket-client
 jupyter
